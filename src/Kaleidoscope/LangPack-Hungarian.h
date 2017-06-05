@@ -16,36 +16,38 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+#pragma once
+
 #include <Kaleidoscope.h>
 #include <Kaleidoscope-Ranges.h>
 
-namespace KaleidoscopePlugins {
-  namespace LangPack {
+namespace kaleidoscope {
+namespace language {
 
-    enum {
-      HUNGARIAN_FIRST = KaleidoscopePlugins::Ranges::KALEIDOSCOPE_SAFE_START,
-      HUN_AA = HUNGARIAN_FIRST,
-      HUN_OA,
-      HUN_OU,
-      HUN_ODA,
-      HUN_EA,
-      HUN_UA,
-      HUN_UU,
-      HUN_UDA,
-      HUN_IA,
-      HUNGARIAN_LAST = HUN_IA,
-    };
-
-    class Hungarian_ : public KaleidoscopePlugin {
-    public:
-      Hungarian_ (void);
-
-      virtual void begin (void) final;
-
-    private:
-      static Key eventHandlerHook (Key mappedKey, byte row, byte col, uint8_t keyState);
-    };
-  };
+enum {
+  HUNGARIAN_FIRST = ranges::KALEIDOSCOPE_SAFE_START,
+  HUN_AA = HUNGARIAN_FIRST,
+  HUN_OA,
+  HUN_OU,
+  HUN_ODA,
+  HUN_EA,
+  HUN_UA,
+  HUN_UU,
+  HUN_UDA,
+  HUN_IA,
+  HUNGARIAN_LAST = HUN_IA,
 };
 
-extern KaleidoscopePlugins::LangPack::Hungarian_ Hungarian;
+class Hungarian : public KaleidoscopePlugin {
+ public:
+  Hungarian(void);
+
+  void begin(void) final;
+
+ private:
+  static Key eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_state);
+};
+};
+};
+
+extern kaleidoscope::language::Hungarian Hungarian;
