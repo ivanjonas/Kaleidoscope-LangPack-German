@@ -47,7 +47,8 @@ class Hungarian : public KaleidoscopePlugin {
  private:
   static Key eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_state);
 };
-};
-};
+
+}
+}
 
 extern kaleidoscope::language::Hungarian Hungarian;
