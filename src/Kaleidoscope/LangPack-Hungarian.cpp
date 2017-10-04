@@ -118,7 +118,7 @@ Hungarian::Hungarian(void) {
 
 void
 Hungarian::begin(void) {
-  event_handler_hook_use(eventHandlerHook);
+  Kaleidoscope.useEventHandlerHook(eventHandlerHook);
 }
 
 }
