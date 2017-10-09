@@ -46,7 +46,7 @@ Hungarian::eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_stat
   if (mapped_key.raw < HUNGARIAN_FIRST || mapped_key.raw > HUNGARIAN_LAST)
     return mapped_key;
 
-  if (!key_toggled_on(key_state))
+  if (!keyToggledOn(key_state))
     return Key_NoKey;
 
   bool need_shift = Keyboard.isModifierActive(Key_LeftShift.keyCode) ||
