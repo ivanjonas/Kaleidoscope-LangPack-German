@@ -25,6 +25,6 @@ The plugin provides the `German` object, and the following new keycodes:
 
 > Short for "u umlaut". The keycode results in `ü`, or `Ü` when shifted.
 
-### DEU_SS
+### DEU_SSch
 
-> Short for "sharfes s". The keycode results in `ä`, or `Ä` when shifted.
+> Short for "s sharfes". The keycode results in `ß`.
