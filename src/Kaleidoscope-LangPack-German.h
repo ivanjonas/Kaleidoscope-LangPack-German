@@ -1,5 +1,7 @@
 /* -*- mode: c++ -*-
- * Kaleidoscope-LangPack-Hungarian -- Hungarian language support
+ * Kaleidoscope-LangPack-German -- German language support
+ * Based on Kaleidoscope-LangPack-Hungarian. All modifications are
+ * trivial, therefore all copyright remains with the original author:
  * Copyright (C) 2016, 2017  Gergely Nagy
  *
  * This program is free software: you can redistribute it and/or modify
@@ -18,37 +20,4 @@
 
 #pragma once
 
-#include <Kaleidoscope.h>
-#include <Kaleidoscope-Ranges.h>
-
-namespace kaleidoscope {
-namespace language {
-
-enum {
-  HUNGARIAN_FIRST = ranges::KALEIDOSCOPE_SAFE_START,
-  HUN_AA = HUNGARIAN_FIRST,
-  HUN_OA,
-  HUN_OU,
-  HUN_ODA,
-  HUN_EA,
-  HUN_UA,
-  HUN_UU,
-  HUN_UDA,
-  HUN_IA,
-  HUNGARIAN_LAST = HUN_IA,
-};
-
-class Hungarian : public KaleidoscopePlugin {
- public:
-  Hungarian(void);
-
-  void begin(void) final;
-
- private:
-  static Key eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_state);
-};
-
-}
-}
-
-extern kaleidoscope::language::Hungarian Hungarian;
+#include <Kaleidoscope/LangPack-German.h>

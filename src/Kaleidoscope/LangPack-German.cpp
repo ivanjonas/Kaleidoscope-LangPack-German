@@ -1,5 +1,7 @@
 /* -*- mode: c++ -*-
- * Kaleidoscope-LangPack-Hungarian -- Hungarian language support
+ * Kaleidoscope-LangPack-German -- German language support
+ * Based on Kaleidoscope-LangPack-German. All modifications are
+ * trivial, therefore all copyright remains with the original author:
  * Copyright (C) 2016, 2017  Gergely Nagy
  *
  * This program is free software: you can redistribute it and/or modify
@@ -16,20 +18,14 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <Kaleidoscope-LangPack-Hungarian.h>
+#include <Kaleidoscope-LangPack-German.h>
 #include <Kaleidoscope-OneShot.h>
 
 typedef enum {
-  AA,
-  OA,
+  AU,
   OU,
-  ODA,
-  EA,
-  UA,
   UU,
-  UDA,
-  IA,
-} HungarianSymbol;
+} GermanSymbol;
 
 namespace kaleidoscope {
 namespace language {
@@ -42,8 +38,8 @@ static void tap_key(uint8_t key_code) {
 }
 
 Key
-Hungarian::eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_state) {
-  if (mapped_key.raw < HUNGARIAN_FIRST || mapped_key.raw > HUNGARIAN_LAST)
+German::eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_state) {
+  if (mapped_key.raw < GERMAN_FIRST || mapped_key.raw > GERMAN_LAST)
     return mapped_key;
 
   if (!keyToggledOn(key_state))
@@ -54,7 +50,7 @@ Hungarian::eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_stat
 
   tap_key(Key_RightAlt.keyCode);
 
-  HungarianSymbol symbol = (HungarianSymbol)(mapped_key.raw - HUNGARIAN_FIRST);
+  GermanSymbol symbol = (GermanSymbol)(mapped_key.raw - GERMAN_FIRST);
   Key accent;
   uint8_t kc = 0;
 
@@ -62,37 +58,21 @@ Hungarian::eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_stat
   accent.keyCode = Key_Quote.raw;
 
   switch (symbol) {
-  case AA:
+  case AU:
     kc = Key_A.keyCode;
-    break;
-  case OA:
-    kc = Key_O.keyCode;
+	accent.flags |= SHIFT_HELD;
     break;
   case OU:
     kc = Key_O.keyCode;
     accent.flags |= SHIFT_HELD;
     break;
-  case ODA:
-    kc = Key_O.keyCode;
-    accent.raw = Key_Equals.raw;
-    break;
-  case EA:
-    kc = Key_E.keyCode;
-    break;
-  case UA:
-    kc = Key_U.keyCode;
-    break;
   case UU:
     kc = Key_U.keyCode;
     accent.flags |= SHIFT_HELD;
     break;
-  case UDA:
-    kc = Key_U.keyCode;
-    accent.raw = Key_Equals.raw;
-    break;
-  case IA:
-    kc = Key_I.keyCode;
-    break;
+  case SS:
+    kc = Key_S.keyCode;
+	break;
   }
 
   if (accent.flags & SHIFT_HELD)
@@ -113,15 +93,15 @@ Hungarian::eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_stat
   return Key_NoKey;
 }
 
-Hungarian::Hungarian(void) {
+German::German(void) {
 }
 
 void
-Hungarian::begin(void) {
+German::begin(void) {
   Kaleidoscope.useEventHandlerHook(eventHandlerHook);
 }
 
 }
 }
 
-kaleidoscope::language::Hungarian Hungarian;
+kaleidoscope::language::German German;
