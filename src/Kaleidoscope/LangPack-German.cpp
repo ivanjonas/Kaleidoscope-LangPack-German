@@ -25,6 +25,7 @@ typedef enum {
   AU,
   OU,
   UU,
+  SSCH,
 } GermanSymbol;
 
 namespace kaleidoscope {
@@ -45,10 +46,10 @@ German::eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_state) 
   if (!keyToggledOn(key_state))
     return Key_NoKey;
 
-  bool need_shift = Keyboard.isModifierActive(Key_LeftShift.keyCode) ||
+  bool need_shift =  Keyboard.isModifierActive(Key_LeftShift.keyCode) ||
                     ::OneShot.isModifierActive(Key_LeftShift);
-
-  tap_key(Key_RightAlt.keyCode);
+  bool is_alt_held = Keyboard.isModifierActive(Key_RightAlt.keyCode) ||
+                    ::OneShot.isModifierActive(Key_RightAlt);
 
   GermanSymbol symbol = (GermanSymbol)(mapped_key.raw - GERMAN_FIRST);
   Key accent;
@@ -60,7 +61,7 @@ German::eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_state) 
   switch (symbol) {
   case AU:
     kc = Key_A.keyCode;
-	accent.flags |= SHIFT_HELD;
+    accent.flags |= SHIFT_HELD;
     break;
   case OU:
     kc = Key_O.keyCode;
@@ -70,25 +71,39 @@ German::eventHandlerHook(Key mapped_key, byte row, byte col, uint8_t key_state) 
     kc = Key_U.keyCode;
     accent.flags |= SHIFT_HELD;
     break;
-  case SS:
+  case SSCH:
     kc = Key_S.keyCode;
-	break;
+    accent.keyCode = 0;
+    break;
   }
 
-  if (accent.flags & SHIFT_HELD)
-    Keyboard.press(Key_LeftShift.keyCode);
-  else
-    Keyboard.release(Key_LeftShift.keyCode);
-  Keyboard.sendReport();
+  // 1 - Hold AltGr.
+  Keyboard.press(Key_RightAlt.keyCode);
 
-  tap_key(accent.keyCode);
+  // 2 - Tap the accent key (with Shift as needed).
+  // 2.1 - If there is no accent key, skip this step.
+  if (accent.keyCode != 0) {
+    if (accent.flags & SHIFT_HELD)
+      Keyboard.press(Key_LeftShift.keyCode);
+    else
+      Keyboard.release(Key_LeftShift.keyCode);
+    Keyboard.sendReport();
 
+    tap_key(accent.keyCode);
+  }
+
+  // 3 - Tap the base key (with Shift as needed).
   if (need_shift)
     Keyboard.press(Key_LeftShift.keyCode);
   else
     Keyboard.release(Key_LeftShift.keyCode);
 
   tap_key(kc);
+
+  // 4 - Cleanup. Release AltGr (unless it was being held at the beginning)
+  if (!is_alt_held) {
+    Keyboard.release(Key_RightAlt.keyCode);
+  }
 
   return Key_NoKey;
 }

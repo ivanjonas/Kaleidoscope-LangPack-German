@@ -31,8 +31,8 @@ enum {
   DEU_AU = GERMAN_FIRST,
   DEU_OU,
   DEU_UU,
-  DEU_SS,
-  GERMAN_LAST = DEU_SS,
+  DEU_SSCH,
+  GERMAN_LAST = DEU_SSCH,
 };
 
 class German : public KaleidoscopePlugin {
